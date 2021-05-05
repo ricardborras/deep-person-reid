@@ -1,0 +1,36 @@
+model:
+  name: 'osnet_ain_x1_0'
+  pretrained: True
+
+data:
+  type: 'image'
+  sources: ['busreid']
+  targets: ['busreid']
+  height: 256
+  width: 256
+  combineall: False
+  transforms: ['random_flip', 'color_jitter', 'random_erase']
+  save_dir: 'log/busreid'
+
+loss:
+  name: 'softmax'
+  softmax:
+    label_smooth: True
+
+train:
+  optim: 'amsgrad'
+  lr: 0.0015
+  max_epoch: 100
+  batch_size: 4
+  fixbase_epoch: 10
+  open_layers: ['classifier']
+  lr_scheduler: 'cosine'
+
+test:
+  batch_size: 4
+  dist_metric: 'cosine'
+  normalize_feature: False
+  evaluate: False
+  eval_freq: -1
+  rerank: False
+  visactmap: False
